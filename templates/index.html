@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Redundancy Removal System</title>
+</head>
+<body>
+    <h1>Data Redundancy Removal System</h1>
+
+    <form id="dataForm">
+        <textarea id="data" placeholder="Enter data" required></textarea>
+        <button type="submit">Submit Data</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        document.getElementById("dataForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const data = document.getElementById("data").value;
+
+            const response = await fetch("/add-data", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({data: data})
+            });
+
+            const result = await response.json();
+
+            document.getElementById("result").textContent =
+                result.status + ": " + result.message;
+        });
+    </script>
+</body>
+</html>
